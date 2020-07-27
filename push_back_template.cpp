@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <list>
 
 using namespace std;
 
@@ -21,4 +22,13 @@ int main()
 	for (const auto& p : my)
 		cout << p << endl;
 
+	copy(begin(my), end(my), ostream_iterator<int>(cout, " "));
+	cout << endl;
+	list<int> l;
+
+	push_back(l, 1, 2, 3, 4, 5);
+	copy(l.begin(), l.end(), ostream_iterator<int>(cout, " "));
+
 }
+
+
