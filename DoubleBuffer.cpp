@@ -79,10 +79,37 @@ private:
 template<typename T>
 void print_buffer(DoubleBuffer<T>& buff)
 {
-	for (auto& i : buff)
-	{
-		cout << i << ' ';
+	buff.read(ostream_iterator<T>(cout, " "));
+	cout << endl;
+}
 
-	}
-	cout << end;
+int main()
+{
+	DoubleBuffer<int> buf(10);
+
+	std::thread t([&buf]() {
+		for (int i = 1; i < 1000; i += 10)
+		{
+			int data[] = { i, i + 1, i + 2, i + 3, i + 4, i + 5, i + 6, i + 7, i + 8, i + 9 };
+			buf.write(data, 10);
+
+			using namespace std::chrono_literals;
+			this_thread::sleep_for(100ms);
+		}
+		});
+
+	auto start = std::chrono::system_clock::now();
+
+	do {
+		print_buffer(buf);
+
+		using namespace std::chrono_literals;
+		this_thread::sleep_for(150ms);
+	} while (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now() - start).count() < 12);
+
+	t.join();
+
+
+
+
 }
