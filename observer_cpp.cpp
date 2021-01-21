@@ -14,7 +14,6 @@ class Observer{
 public:
 
   //Observer();
-  virtual ~Observer() = default;
   
   virtual void update(float temp, float hum, float press) = 0;
     
@@ -29,8 +28,7 @@ class Subject
 public:
 
  // Subject();
-  virtual ~Subject() = default;
-  Subject();
+ 
   virtual void registerObserver(Observer* o) = 0;
   virtual void removeObserver(Observer* o) = 0;
   virtual void notifyObservers() = 0;
@@ -40,7 +38,6 @@ public:
     
 };
 
-Subject::Subject(){}
 
 class WeatherData : public Subject
 {
@@ -54,8 +51,7 @@ class WeatherData : public Subject
   
   public:
   
-  WeatherData();
-  
+  WeatherData() {}
   void SetChanged(float hum, float temper, float press)
   {
       this->hum = hum;
@@ -98,10 +94,6 @@ class WeatherData : public Subject
 };
 
 
-WeatherData::WeatherData(){};
-
-
-
 
 
 class CurCondition : public Observer
@@ -115,10 +107,18 @@ class CurCondition : public Observer
     
     public:
     //CurCondition();
-    CurCondition(Subject* weather);
-    CurCondition();
+    CurCondition(Subject* weather)
+	{
+		this->w = weather;
+		this->w->registerObserver(this);
+
+	}
     
-    ~CurCondition();
+    
+    ~CurCondition()
+	{
+		this->w->removeObserver(this);
+	}
     
     
     void update(float temper, float hum, float press)
@@ -152,14 +152,6 @@ class CurCondition : public Observer
     
 };
 
-
-CurCondition::CurCondition(Subject* weather)
-    {
-        w=weather;
-        w->registerObserver(this);
-    }
-
-CurCondition::CurCondition(){}
 
 
 
