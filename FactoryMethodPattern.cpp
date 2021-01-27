@@ -475,7 +475,7 @@ protected:
 	Pizza* createPizza(string type)
 	{
 		Pizza* pizza = nullptr;
-		PizzaIngredient* ingredient = new NYPizzaIngredient();
+		PizzaIngredient* ingredient = new ChicagoPizzaIngredient();
 
 		if (type == "cheese")
 		{
