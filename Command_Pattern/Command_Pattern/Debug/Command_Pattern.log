@@ -1,0 +1,3 @@
+﻿  RemoteControl.cpp
+C:\Users\dwrhk\source\repos\Command_Pattern\Command_Pattern\RemoteControl.cpp(44,24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Command_Pattern.vcxproj -> C:\Users\dwrhk\source\repos\Command_Pattern\Debug\Command_Pattern.exe
