@@ -13,10 +13,10 @@ int main()
 	int len = sizeof(arr) / sizeof(int);
 
 
-	cout << "h sort 오름차순 정렬전\n\n";
+	cout << "shell sort 오름차순 정렬전\n\n";
 	for (int i = 0; i < len; i++)
 		cout << arr[i] << " ";
-	cout << "\n\nh sort 오름차순 정렬후\n\n";
+	cout << "\n\nshell sort 오름차순 정렬후\n\n";
 
 	int h = 1;
 
@@ -51,10 +51,10 @@ int main()
 
 	int len = sizeof(arr) / sizeof(int);
 
-	cout << "h sort 내림차순 정렬전\n\n";
+	cout << "shell sort 내림차순 정렬전\n\n";
 	for (int i = 0; i < len; i++)
 		cout << arr[i] << " ";
-	cout << "\n\nh sort 내림차순 정렬후\n\n";
+	cout << "\n\nshell sort 내림차순 정렬후\n\n";
 
 	int h = 1;
 
