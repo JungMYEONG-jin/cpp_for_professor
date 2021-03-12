@@ -26,7 +26,7 @@ void Library::PrintAllContents()
 		{
 			if (i.getBook()==it && i.getBook().get_id() == it.get_id())
 			{
-				cout << i.getDate();// ¹İ³³ÇØ¾ßÇÒ ³¯Â¥
+				cout << i.getDate();// ë°˜ë‚©í•´ì•¼í•  ë‚ ì§œ
 				count++;
 			}
 		}
@@ -73,14 +73,14 @@ void Library::PrintRentBook()
 	{
 		cout << "Book: " << it.getBook().get_book_name() << " Writer: " << it.getBook().get_writer_name() << " id: " << it.getBook().get_id() << " Date: " << it.getDate() << endl;
 	}
-	// ´©°¡ ºô·È´ÂÁö´Â º¸¿©ÁÖÁö ¾Ê´Â´Ù Á¤º¸ À¯ÃâÀ§Çè
+	// ëˆ„ê°€ ë¹Œë ¸ëŠ”ì§€ëŠ” ë³´ì—¬ì£¼ì§€ ì•ŠëŠ”ë‹¤ ì •ë³´ ìœ ì¶œìœ„í—˜
 }
 
 
 bool Library::RentBook(RentInfo& paramrentinfo)
 {
 
-	// ÀÏ´Ü È¸¿øÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎÇØ¾ßÇÔ
+	// ì¼ë‹¨ íšŒì›ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸í•´ì•¼í•¨
 
 	if (SearchMemberByMember(paramrentinfo.getMember()) == -1)
 	{
@@ -97,7 +97,7 @@ bool Library::RentBook(RentInfo& paramrentinfo)
 
 	if (IsRented(paramrentinfo))
 	{
-		// ´ë¿©°¡ µÈ°ÍÀÓ
+		// ëŒ€ì—¬ê°€ ëœê²ƒì„
 		cout << "Already Rented!" << endl;
 		return false;
 	}
@@ -133,7 +133,7 @@ bool Library::DeleteMember(const Member& newMember)
 		return true;
 
 	}
-	//ÇØ´ç ¸â¹ö°¡ Á¸ÀçÇÏÁö ¾Ê´Â °æ¿ì
+	//í•´ë‹¹ ë©¤ë²„ê°€ ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²½ìš°
 	cout << "Delete Failed! The Member is not existed in MemberInfo." << endl;
 	return false;
 
@@ -150,7 +150,7 @@ bool Library::AddBook(const Book& newMember)
 	}
 	cout << "The Book is added Successfully" << endl;
 	bookinfo.push_back(newMember);
-	numOfBook[newMember]++; // ÃÑ±Ç¼ö Áõ°¡
+	numOfBook[newMember]++; // ì´ê¶Œìˆ˜ ì¦ê°€
 	return true;
 
 }
@@ -160,7 +160,7 @@ bool Library::DeleteBook(const Book& newMember)
 	int idx = SearchBookByBook(newMember);
 
 
-	if (idx != -1)// Á¸ÀçÇÏ¸é
+	if (idx != -1)// ì¡´ì¬í•˜ë©´
 	{
 		bookinfo.erase(bookinfo.begin() + idx);
 		numOfBook[newMember]--;
@@ -179,9 +179,9 @@ bool Library::IsRented(const RentInfo& paramRentInfo)
 {
 	auto it = find_if(rentinfo.begin(), rentinfo.end(), [&paramRentInfo](const RentInfo& rent) {return rent.getBook() == paramRentInfo.getBook() && rent.getBook().get_id() == paramRentInfo.getBook().get_id(); });
 	if (it == rentinfo.end())
-		return false; // ÀÏÄ¡¸ñ·ÏÀÌ ¾øÀ½
+		return false; // ì¼ì¹˜ëª©ë¡ì´ ì—†ìŒ
 
-	return true; // ´ë¿©ÁßÀÎ°ÍÀÓ
+	return true; // ëŒ€ì—¬ì¤‘ì¸ê²ƒì„
 
 }
 
@@ -189,17 +189,17 @@ bool Library::IsRented(const RentInfo& paramRentInfo)
 
 int Library::SearchBookByKey(const string& key)
 {
-	// key´Â ÀÛ°¡ÀÌ¸§ ¶Ç´Â Ã¥ÀÌ¸§ÀÌ µÉ ¼ö ÀÖ´Ù
+	// keyëŠ” ì‘ê°€ì´ë¦„ ë˜ëŠ” ì±…ì´ë¦„ì´ ë  ìˆ˜ ìˆë‹¤
 
 	auto it = find_if(bookinfo.begin(), bookinfo.end(), [&key](const Book& book) {return book.get_book_name() == key || book.get_writer_name() == key; });
 	if (it == bookinfo.end())
-		return -1; // ÇØ´ç Ã¥ÀÌ Á¸ÀçÇÏÁö ¾ÊÀ½
-	// ´ë¿© °¡´É ¿©ºÎµµ º¸¿©Áà¾ßÇÔ
+		return -1; // í•´ë‹¹ ì±…ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŒ
+	// ëŒ€ì—¬ ê°€ëŠ¥ ì—¬ë¶€ë„ ë³´ì—¬ì¤˜ì•¼í•¨
 	vector<Book> res;
 	for (auto& i : bookinfo)
 		if (*it == i)
 			res.push_back(i);
-	// Ã¥ÀÌ¸§ ¶Ç´Â ÀÛ°¡ÀÌ¸§ÀÌ °°À¸¸é ÀÏ´Ü push
+	// ì±…ì´ë¦„ ë˜ëŠ” ì‘ê°€ì´ë¦„ì´ ê°™ìœ¼ë©´ ì¼ë‹¨ push
 
 	for (auto& i : res)
 	{
@@ -230,7 +230,7 @@ int Library::SearchMemberByKey(const string& key)
 	if (it == memberinfo.end())
 		return -1;
 	return it - memberinfo.begin();
-    // phonenumber·Î Ã£±â
+    // phonenumberë¡œ ì°¾ê¸°
 }
 
 int Library::SearchBookByBook(const Book& book)
