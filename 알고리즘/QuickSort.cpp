@@ -128,6 +128,36 @@ void quicksort(vector<int>& arr, int low, int high)
 }
 
 
+void quicksort2(vector<int>& arr, int low, int high)
+{
+	if (low >= high)
+		return;
+	int pivot = arr[(low + high) >> 1];
+
+	int left = low;
+	int right = high;
+
+	while (left <= right)
+	{
+		while (arr[left] < pivot)
+			left++;
+		while (arr[right] > pivot)
+			right--;
+
+		if (left <= right)
+		{
+			swap(arr[left], arr[right]);
+			left++;
+			right--;
+		}
+	}
+
+	quicksort2(arr, low, right);
+	quicksort(arr, left, high);
+
+}
+
+
 int main()
 {
 
