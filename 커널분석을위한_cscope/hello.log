@@ -1,0 +1,5 @@
+execve("./", ["./", "hello"], 0x7ffe94f9f238 /* 63 vars */) = -1 EACCES (Permission denied)
+write(2, "strace: exec: Permission denied\n", 32) = 32
+getpid()                                = 4042
+exit_group(1)                           = ?
++++ exited with 1 +++
