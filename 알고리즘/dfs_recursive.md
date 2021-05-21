@@ -61,7 +61,6 @@ int main()
 
 ```
 
-```
+
 해당 코드를 실행하면 1,2,3  4,5  6 이렇게 총 3개의 connected components가 존재하게 되므로 3개가 나오고 각 component의 원소가 출력된다.
 
-```
