@@ -1,0 +1,86 @@
+#include <string>
+#include <vector>
+#include <map>
+#include <sstream>
+#include <iostream>
+#include <regex>
+
+using namespace std;
+
+class People
+{
+public:
+  People(string name, string address)
+  {
+    this->name = name;
+    this->address = address;
+  }
+  string getName()
+  {
+    return name;
+  }
+  string getAddress()
+  {
+    return address;
+  }
+  private:
+    string name;
+    string address;
+  
+};
+
+
+
+class PhoneDir
+{
+public:
+    static std::string phone(const std::string& orgdr, std::string num)
+    {
+      string copy = orgdr;
+      stringstream sstr(copy);
+      string temp;
+      map<string, vector<People>> db; // phone number and people
+      while(getline(sstr, temp, '\n'))
+      {
+        
+          
+          int nameIdx = temp.find('<');
+          int nameIdxEnd = temp.find('>');
+          string name = temp.substr(nameIdx+1, nameIdxEnd-nameIdx-1);
+          temp.replace(temp.find("<"+name+">"), name.size()+2,"");
+          int phoneIdx = temp.find('+');
+          int phoneIdxEnd = temp.find(' ',phoneIdx);
+          string phone = temp.substr(phoneIdx+1, phoneIdxEnd-phoneIdx-1);
+          temp.replace(temp.find(phone), phone.size(), "");
+          phone = regex_replace(phone, regex("[^0-9-]"),"");
+          temp = regex_replace(temp, regex("[+]"), "");
+          temp = regex_replace(temp, regex("[^0-9a-zA-Z-.]+")," "); 
+          cout<<temp<<" "<<phone<<" "<<name<<endl;
+          temp.erase(temp.begin(), find_if(temp.begin(), temp.end(), [](auto e){return !isspace(e);}));
+          temp.erase(find_if(temp.rbegin(), temp.rend(), [](auto e){return !isspace(e);}).base(), temp.end());
+          stringstream sstr2(temp);
+          string temp2;
+          string address;
+          while(getline(sstr2, temp2, ' '))
+          {
+            if(temp2!=" ")
+              address+=temp2+" ";
+          }
+          address.pop_back();
+
+          db[phone].push_back(People(name, address)); 
+      }
+      
+
+      auto res = db[num];
+      if(res.empty())
+        return "Error => Not found: "+num;
+      else if(res.size()>1)
+        return "Error => Too many people: "+num;
+      else
+        return "Phone => "+num+", Name => "+res[0].getName()+", Address => "+res[0].getAddress();
+ 
+      return "";
+      
+    }
+};
