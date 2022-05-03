@@ -41,6 +41,35 @@ sudo apt list | grep jdk
 
 버전 확인후 원하는 버전 설치
 
+```console
+sudo apt-get install openjdk-11-jdk
+
+java -version
+javac -version
+```
+설치후 잘 설치되었나 확인
+
+그리고 환경설정 해주자
+
+``` console
+vi ~/.bashrc
+export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+export PATH=$PATH:$JAVA_HOME/bin
+
+```
+편집기로 열어준후 맨아래에 export 문구 넣어줌
+
+저장후 
+
+``` console
+source ~/.bashrc
+echo $JAVA_HOME
+```
+
+echo 했을때 경로 나오면 성공
+
+이제 톰캣을 설치해보자
+
 
 
 
