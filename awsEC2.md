@@ -28,6 +28,33 @@ sudo apt-get install -y apache2
 - Esc, :,wq로 저장 후 종료
 - service apache2 restart
 
+## yum설치
+
+우분투 22.04 jammy는 yum4로 설치해야한다...
+
+unable to locate package error 발생시 해당 문구 넣어주기
+
+``` console
+sudo vi sources.list
+
+deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
+
+```
+
+그리고 설치
+
+``` console
+
+sudo apt-get update
+sudo apt-get install yum4
+
+```
+
+
+
+
 ## Tomcat (WAS 설치)
 
 Tomcat을 설치하기 전 자바를 먼저 설치해야함.
@@ -69,6 +96,7 @@ echo $JAVA_HOME
 echo 했을때 경로 나오면 성공
 
 이제 톰캣을 설치해보자
+
 
 
 
