@@ -28,6 +28,65 @@ sudo apt-get install -y apache2
 - Esc, :,wq로 저장 후 종료
 - service apache2 restart
 
+apache2는 websocket 사용시 프록시 패스, 포트 포워딩이 필요함.
+
+/etc/apache2/ports.conf
+/etc/apache2/sites-available/deafult-ssl.conf
+수정해야함
+
+ports.conf
+
+ssl 모듈내 listen port 수정하면 해당 포트를 https 연결에 사용하겠다는 뜻임
+
+ex) 8443 설정시 앞으로 8443이 https 포트로 되는거
+
+default-ssl.conf에서도 Listen 포트 변경해줘야함(기존 443이기 때문 프록시 패스를 사용하면 해당 포트도 추가해주고)
+
+websocket은 ws, wss로 사용되 ws http wss https임
+
+근데 apache2에서는 이걸 그냥 ws, wss로 인식해버림
+
+``` console
+$ a2enmod rewrite        # 보통 default로 enable 되어있는 경우가 많다.
+$ a2enmod proxy_wstunnel
+
+# default-ssl.conf docker file expose를 443으로 하고 wss 8200으로 https는 기존 443으로 그대로 두면됨
+
+RewriteEngine on
+RewriteCond %{HTTPS:UPGRADE} =websocket [NC]
+RewriteRule .* wss:/spass.hancy.kr:8200/$1 [P,L]
+ 
+ProxyPass / https://spass.hancy/kr:8200
+ProxyPassReverse / https://spass.hancy.kr:8200
+or
+ProxyPass / https://127.0.0.1:8200
+ProxyPassReverse / https://127.0.0.1:8200
+
+```
+
+## docker
+
+docker run -p 
+
+docker run -it -p 8200:8200 spass
+이렇게 컨테이너를 새로 만들면, 호스트 운영체제의 8200 포트와 컨테이너의 8200 포트가 매핑됩니다. 호스트 운영체제의 8200 포트로 전달된 정보들이 도커를 통해 컨테이너의 8200 포트로 포워딩된다는 의미입니다.
+
+도커를 실행할 때 -p 옵션은 꼭 같은 번호로 하지 않아도 됩니다.
+
+docker run -it -p 8088:80 spass
+위 명령처럼 컨테이너를 실행하면 호스트 운영체제의 8088번 포트가 컨테이너의 80번 포트로 연결됩니다.
+
+Dockerfile의 EXPOSE
+도커 이미지를 만들 수 있는 Dockerfile에 EXPOSE 명령을 사용할 수 있습니다. 예를 들어
+
+FROM openjdk:8
+COPY Test.class /root
+WORKDIR /root
+EXPOSE 443
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=443", "Test"]
+이런 Dockerfile이 있을 때 EXPOSE 명령을 이용해, '이 도커 이미지는 443 포트를 외부에 공개할 예정이다'라고 명시할 수 있습니다.
+
+
 ## yum설치
 
 우분투 22.04 jammy는 yum4로 설치해야한다...
@@ -52,6 +111,9 @@ sudo apt-get install yum4
 
 ```
 
+근데 아직 문제가 많음
+
+20.04나 18.04등 안정된 버전으로 다시 세팅하는게 좋을듯
 
 
 
@@ -96,6 +158,8 @@ echo $JAVA_HOME
 echo 했을때 경로 나오면 성공
 
 이제 톰캣을 설치해보자
+
+## 
 
 
 
