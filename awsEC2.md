@@ -5,10 +5,10 @@
 
 # 기본 세팅 하기
 
-## Ngix
+## Nginx
 https://wingsnote.com/55?category=514236 여기 참고
 
-웹서버는 Ngix나 Apache 골라서 설치하면됨
+웹서버는 Nginx Apache 골라서 설치하면됨
 
 ## Apache2 (웹서버 설치)
 
@@ -85,6 +85,9 @@ WORKDIR /root
 EXPOSE 443
 ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=443", "Test"]
 이런 Dockerfile이 있을 때 EXPOSE 명령을 이용해, '이 도커 이미지는 443 포트를 외부에 공개할 예정이다'라고 명시할 수 있습니다.
+
+
+사실 도커에서 웹서버가 자체적으로 가능해서 apache2를 같이 적용할 필요없음. apache2 stop시키고 해도됨.
 
 
 ## yum설치
