@@ -162,8 +162,53 @@ echo 했을때 경로 나오면 성공
 
 이제 톰캣을 설치해보자
 
-## 
+## Nodejs 설치
 
+docker에 node를 띄우지 않고 직접 서버에 띄우려면 node를 설치해야한다.
+
+``` console
+
+sudo apt-get update
+
+sudo apt-get install nodejs
+
+sudo apt-get install npm
+
+# 버전별로 설치하려면 nvm 설치하는게 더좋음
+# https://github.com/nvm-sh/nvm 해당 깃헙 들어가서 메인에 curl ~~~ 부분 복사해서 실행
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# 수정사항 적용 위해 source 실행
+source ./bashrc
+
+cd spass directory
+
+# index.js를 실행해주면된다.
+node index.js
+
+```
+
+하지만 이렇게 하면 터미널이 종료되면 node서버가 종료되는 현상이 생긴다. 그 이유는 백그라운드애서 돌아가지 않기 때문이다.
+이를 해결하려면 백그라운드에서 돌게 하거나 도커로 실행하면됨. 만약 서버에서 백그라운드 돌릴거라면 forever 모듈이 필요함.
+
+``` console
+
+sudo npm install forever -g
+
+# 이렇게 구동시 백그라운드에서 실행됨.
+sudo forever start index.js
+
+# 현재 백그라운드에서 구동중인 프로세스 보여줌
+sudo forever list
+
+# 중단 하려면 pid 알아야됨.
+
+sudo forever stop {pid}
+
+
+```
+pid에 프로세스 아이디 값을 넣어주면 해결
 
 
 
