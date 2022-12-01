@@ -1,0 +1,32 @@
+# 투포인터가 핵심!
+
+```
+while(left<right && nums[left]==nums[left-1]) left++;
+```
+이 부분도 핵심이다. 값을 뽑은후 중복값이 발생할 수 있기 때문에 다시 한번 left를 이동해준다.
+
+
+```c++
+vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for(int i=0,len = nums.size();i<len-2;i++){
+            if(i>0 && nums[i]==nums[i-1])
+                continue;
+            int idx = i;
+            int left = i+1;
+            int right = len-1;
+            while(left<right){
+                int sum = nums[idx]+nums[left]+nums[right];
+                if(0==sum){
+                    res.push_back({nums[idx], nums[left++], nums[right--]});
+                    while(left<right && nums[left]==nums[left-1]) left++;
+                }else if(sum>0){
+                    right--;
+                }else{
+                    left++;
+                }
+            }
+        }
+        return res;
+    }
+```
