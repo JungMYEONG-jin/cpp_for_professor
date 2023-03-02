@@ -31,3 +31,22 @@ int solution(int n, int m, vector<int> section) {
 
     return answer;
 }
+
+
+bool a[200000];
+int solution2(int n, int m, vector<int> section) {
+    int answer = 0;
+    for(int i = 0; i < section.size(); i++){
+        a[section[i]] = 1;
+    }
+
+    for(int i = 1; i <= n; i++){
+        if(a[i]){
+            answer++;
+            for(int j = 0; j < m; j++){
+                a[i + j] = 0;
+            }
+        }
+    } 
+    return answer;
+}
